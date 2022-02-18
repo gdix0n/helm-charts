@@ -3,7 +3,7 @@
 # Jaeger values are grouped by component. Cassandra values override subchart values
 
 provisionDataStore:
-  cassandra: true
+  cassandra: false
   elasticsearch: false
   kafka: false
 
@@ -14,7 +14,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 allInOne:
-  enabled: false
+  enabled: true
   image: jaegertracing/all-in-one
   tag: 1.29.0
   pullPolicy: IfNotPresent
@@ -208,7 +208,7 @@ ingester:
 agent:
   podSecurityContext: {}
   securityContext: {}
-  enabled: true
+  enabled: false
   annotations: {}
   image: jaegertracing/jaeger-agent
   # tag: 1.22
@@ -279,7 +279,7 @@ agent:
 collector:
   podSecurityContext: {}
   securityContext: {}
-  enabled: true
+  enabled: false
   annotations: {}
   image: jaegertracing/jaeger-collector
   # tag: 1.22
@@ -404,7 +404,7 @@ collector:
     additionalLabels: {}
 
 query:
-  enabled: true
+  enabled: false
   oAuthSidecar:
     enabled: false
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.0
