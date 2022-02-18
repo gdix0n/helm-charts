@@ -22,7 +22,6 @@ spec:
         {{- include "jaeger.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: all-in-one
       annotations:
-        sidecar.istio.io/inject: "false"
         prometheus.io/port: "14269"
         prometheus.io/scrape: "true"
     spec:
@@ -32,8 +31,8 @@ spec:
               value: memory
             - name: COLLECTOR_ZIPKIN_HOST_PORT
               value: :9411
-            - name: QUERY_BASE_PATH
-              value: /jaeger
+            - name: JAEGER_DISABLED
+              value: "false"
             {{- if .Values.allInOne.samplingConfig }}
             - name: SAMPLING_STRATEGIES_FILE
               value: /etc/conf/strategies.json
