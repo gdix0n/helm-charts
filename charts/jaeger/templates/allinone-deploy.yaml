@@ -22,6 +22,7 @@ spec:
         {{- include "jaeger.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: all-in-one
       annotations:
+        sidecar.istio.io/inject: "false"
         prometheus.io/port: "14269"
         prometheus.io/scrape: "true"
     spec:
