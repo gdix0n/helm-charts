@@ -11,7 +11,7 @@ provisionDataStore:
 tag: ""
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "jaeger"
 
 allInOne:
   enabled: true
