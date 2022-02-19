@@ -18,6 +18,7 @@ allInOne:
   image: jaegertracing/all-in-one
   tag: 1.29.0
   pullPolicy: IfNotPresent
+  pvcSize: 10Gi
   # samplingConfig: |-
   #   {
   #     "default_strategy": {
