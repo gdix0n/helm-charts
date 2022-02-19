@@ -105,7 +105,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: jaegerpvc
+            claimName: jaeger-pvc
     {{- if .Values.allInOne.samplingConfig}}            
         - name: strategies
           configMap:
