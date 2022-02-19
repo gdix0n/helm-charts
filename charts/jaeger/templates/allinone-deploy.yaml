@@ -1,4 +1,16 @@
 {{- if .Values.allInOne.enabled -}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jaegerpvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "10Gi"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -28,8 +40,14 @@ spec:
     spec:
       containers:
         - env:
+            - name: BADGER_EPHEMERAL
+              value: "false"
             - name: SPAN_STORAGE_TYPE
-              value: memory
+              value: "badger"
+            - name: BADGER_DIRECTORY_VALUE
+              value: "/badger/data"
+            - name: BADGER_DIRECTORY_KEY
+              value: "/badger/key"
             - name: COLLECTOR_ZIPKIN_HOST_PORT
               value: :9411
             - name: JAEGER_DISABLED
@@ -76,14 +94,19 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
-        {{- if .Values.allInOne.samplingConfig}}
           volumeMounts:
+            - name: data
+              mountPath: /badger          
+        {{- if .Values.allInOne.samplingConfig}}         
             - name: strategies
               mountPath: /etc/conf/
         {{- end }}
       serviceAccountName: {{ template "jaeger.fullname" . }}
-    {{- if .Values.allInOne.samplingConfig}}
       volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: jaegerpvc
+    {{- if .Values.allInOne.samplingConfig}}            
         - name: strategies
           configMap:
             name: {{ include "jaeger.fullname" . }}-sampling-strategies
