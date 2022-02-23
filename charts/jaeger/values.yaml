@@ -458,22 +458,22 @@ query:
     # Specify a specific node port when type is NodePort
     # nodePort: 32500
   ingress:
-    enabled: false
+    enabled: true
     # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
     # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    # ingressClassName: nginx
+    ingressClassName: nginx
     annotations: {}
     # Used to create an Ingress record.
-    # hosts:
-    #   - chart-example.local
+     hosts:
+       - jaeger.gdixon.io
     # annotations:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
-    # tls:
+     tls:
       # Secrets must be manually created in the namespace.
-      # - secretName: chart-example-tls
-      #   hosts:
-      #     - chart-example.local
+       - secretName: wildcard-cert
+         hosts:
+           - jaeger.gdixon.io
     health:
       exposed: false
   resources: {}
